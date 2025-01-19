@@ -1,0 +1,13 @@
+- name: Remove older Node.js versions
+  ansible.builtin.dnf:
+    name: nodejs
+    state: absent
+
+- name: Enable Node.js 20 repo
+  ansible.builtin.command:
+    cmd: dnf module enable nodejs:20 -y
+
+- name: Install Node.js
+  ansible.builtin.dnf:
+    name: nodejs
+    state: installed

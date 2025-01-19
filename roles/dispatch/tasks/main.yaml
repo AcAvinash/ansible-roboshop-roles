@@ -1,0 +1,38 @@
+- name: Install GoLang
+  ansible.builtin.dnf:
+    name: golang
+    state: installed
+
+- name: setup the application
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app_setup
+
+- name: Check if go.mod exists
+  ansible.builtin.stat:
+    path: /app/go.mod
+  register: go_mod
+
+- name: Initialize Go modules if go.mod doesn't exist
+  ansible.builtin.command:
+    cmd: go mod init dispatch
+  args:
+    chdir: /app
+  when: not go_mod.stat.exists
+
+- name: Get Go dependencies
+  ansible.builtin.command:
+    cmd: go get
+  args:
+    chdir: /app
+
+- name: Build the Go application
+  ansible.builtin.command:
+    cmd: go build
+  args:
+    chdir: /app
+
+- name: start the application
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd-seup

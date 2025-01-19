@@ -1,0 +1,39 @@
+- name: Install nodejs
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs
+
+- name: setup application
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: Install application dependencies
+  ansible.builtin.command:
+    cmd: npm install
+  args:
+    chdir: /app
+
+- name: Start application
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd-setup
+
+- name: Copy the MongoDB repo file
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: Install MongoDB shell
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: installed
+
+- name: Load catalogue schema into MongoDB
+  ansible.builtin.shell:
+    cmd: mongosh --host mongodb.joindevops.fun /app/schema/catalogue.js
+
+- name: Restart application
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd-restart
