@@ -1,5 +1,5 @@
-- name: restart {{component}}
+- name: restart {{ component }}
   ansible.builtin.service:
-    name: {{component}}
+    name: {{ component }}
     state: restarted
     enabled: true
