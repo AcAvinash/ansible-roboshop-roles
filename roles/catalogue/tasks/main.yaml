@@ -19,10 +19,10 @@
     name: common
     tasks_from: systemd-setup
 
-- name: Copy the MongoDB repo file
-  ansible.builtin.copy:
-    src: mongo.repo
-    dest: /etc/yum.repos.d/mongo.repo
+- name: Load Schema
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: load-mongo-schema
 
 - name: Install MongoDB shell
   ansible.builtin.dnf:
