@@ -22,7 +22,7 @@
 - name: Load Schema
   ansible.builtin.import_role:
     name: common
-    tasks_from: load-mongo-schema
+    tasks_from: mongo.repo
 
 - name: Install MongoDB shell
   ansible.builtin.dnf:
