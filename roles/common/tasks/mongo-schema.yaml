@@ -2,3 +2,13 @@
   ansible.builtin.copy:
     src: mongo.repo
     dest: /etc/yum.repos.d/mongo.repo
+
+
+- name: Install MongoDB shell
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: installed
+
+- name: Load {{ component }} schema into MongoDB
+  ansible.builtin.shell:
+    cmd: mongosh --host mongodb.joindevops.fun /app/schema/{{ component }}.js

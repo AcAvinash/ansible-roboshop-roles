@@ -24,14 +24,6 @@
     name: common
     tasks_from: mongo-schema
 
-- name: Install MongoDB shell
-  ansible.builtin.dnf:
-    name: mongodb-mongosh
-    state: installed
-
-- name: Load catalogue schema into MongoDB
-  ansible.builtin.shell:
-    cmd: mongosh --host mongodb.joindevops.fun /app/schema/catalogue.js
 
 - name: Restart application
   ansible.builtin.import_role:
