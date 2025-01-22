@@ -29,13 +29,14 @@
     src: /tmp/web.zip
     dest: /usr/share/nginx/html
     remote_src: yes
-
+#it will go to template folder to get roboshop conf files
 - name: Copy Roboshop NGINX configuration
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: roboshop.conf
     dest: /etc/nginx/default.d/roboshop.conf
+    #this is handler
+  notify:
+  - restart nginx
 
-- name: Restart NGINX
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
+
+

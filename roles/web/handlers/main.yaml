@@ -1,0 +1,6 @@
+#it should be of smae name as u give in the notify
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
