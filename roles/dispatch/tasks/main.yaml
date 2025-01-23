@@ -6,7 +6,7 @@
 - name: setup the application
   ansible.builtin.import_role:
     name: common
-    tasks_from: app_setup
+    tasks_from: app-setup
 
 - name: Check if go.mod exists
   ansible.builtin.stat:
