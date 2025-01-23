@@ -35,4 +35,4 @@
 - name: start the application
   ansible.builtin.import_role:
     name: common
-    tasks_from: systemd-seup
+    tasks_from: systemd-setup
